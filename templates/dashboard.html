@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome, {{ name }}</h2>
+        <form id="transactionForm">
+            <label for="account_id">Account ID:</label>
+            <input type="text" id="account_id" name="account_id" required>
+
+            <label for="amount">Transaction Amount ($):</label>
+            <input type="number" id="amount" name="amount" required>
+
+            <button type="submit">Check Transaction</button>
+        </form>
+
+        <div id="result"></div>
+        <br>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

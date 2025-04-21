@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - FraudGuard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .login-container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-card {
+            max-width: 450px;
+            width: 100%;
+            margin: 0 auto;
+            border-radius: 24px;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .logo-icon {
+            font-size: 3.5rem !important;
+            margin-bottom: 1.5rem !important;
+            animation: pulse 2s infinite;
+        }
+        
+        .error-banner {
+            background: var(--error-gradient);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        .login-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-size: 300% 300%;
+            animation: gradientBG 15s ease infinite;
+        }
+        
+        .login-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .login-form-container {
+            padding: 2rem;
+        }
+        
+        .login-footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #6B7280;
+            font-size: 0.875rem;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-background"></div>
+    
+    <div class="login-container">
+        <div class="card login-card">
+            <div class="login-form-container">
+                <div class="login-brand">
+                    <i class="fas fa-shield-alt logo-icon"></i>
+                    <h1>FraudGuard</h1>
+                    <p class="subtitle">Secure Payment Fraud Detection System</p>
+                </div>
+                
+                <form id="loginForm" class="form" action="{{ url_for('login') }}" method="POST">
+                    {% if error %}
+                    <div class="error-banner">
+                        <i class="fas fa-exclamation-triangle"></i> {{ error }}
+                    </div>
+                    {% endif %}
+                    
+                    <div class="form-group">
+                        <label for="username">
+                            <i class="fas fa-user"></i>
+                            Username
+                        </label>
+                        <input type="text" id="username" name="username" required 
+                               placeholder="Enter your username">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">
+                            <i class="fas fa-lock"></i>
+                            Password
+                        </label>
+                        <input type="password" id="password" name="password" required
+                               placeholder="Enter your password">
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <span class="btn-text">Login</span>
+                        <i class="fas fa-sign-in-alt"></i>
+                    </button>
+                </form>
+                
+                <div class="login-footer">
+                    &copy; 2023 FraudGuard. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Create floating particles effect
+        document.addEventListener('DOMContentLoaded', () => {
+            const createParticle = () => {
+                const particle = document.createElement('div');
+                const size = Math.random() * 10 + 5;
+                const colors = [
+                    'rgba(139, 92, 246, 0.3)',
+                    'rgba(236, 72, 153, 0.3)',
+                    'rgba(245, 158, 11, 0.3)',
+                    'rgba(59, 130, 246, 0.3)'
+                ];
+                
+                particle.style.position = 'fixed';
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.borderRadius = '50%';
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.zIndex = '-1';
+                particle.style.animation = `float ${Math.random() * 5 + 3}s linear infinite`;
+                
+                document.body.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 8000);
+            };
+            
+            // Create initial particles
+            for (let i = 0; i < 15; i++) {
+                createParticle();
+            }
+            
+            // Continue creating particles
+            setInterval(createParticle, 300);
+            
+            // Add floating animation style
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes float {
+                    0% { transform: translateY(0) rotate(0); opacity: 0; }
+                    10% { opacity: 0.5; }
+                    90% { opacity: 0.3; }
+                    100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Set background gradient
+            document.querySelector('.login-background').style.background = 'linear-gradient(-45deg, #F0FDFA, #EFF6FF, #F3E8FF, #FCE7F3)';
+        });
+    </script>
+</body>
+</html>
